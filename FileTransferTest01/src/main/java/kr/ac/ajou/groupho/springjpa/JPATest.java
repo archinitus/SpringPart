@@ -33,5 +33,7 @@ public class JPATest {
 		
 		// close the context
 		((ConfigurableApplicationContext)ctx).close();
+		
+		// Why it doesn't work....
 	}
 }
