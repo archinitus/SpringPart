@@ -1,8 +1,8 @@
-package kr.ac.ajou.groupho.springjpa;
+package kr.ac.ajou.springjpa;
 
 import java.util.List;
 
-import kr.ac.ajou.groupho.springjpa.data.Message;
+import kr.ac.ajou.springjpa.data.Message;
 
 public interface MessageManager {
 	

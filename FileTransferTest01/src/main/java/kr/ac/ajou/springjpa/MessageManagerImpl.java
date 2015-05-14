@@ -1,12 +1,14 @@
-package kr.ac.ajou.groupho.springjpa;
+package kr.ac.ajou.springjpa;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import kr.ac.ajou.groupho.springjpa.data.Message;
-import kr.ac.ajou.groupho.springjpa.data.MessageRepository;
+import kr.ac.ajou.springjpa.data.Message;
+import kr.ac.ajou.springjpa.data.MessageRepository;
 
+@Service
 public class MessageManagerImpl implements MessageManager {
 	
 	@Autowired

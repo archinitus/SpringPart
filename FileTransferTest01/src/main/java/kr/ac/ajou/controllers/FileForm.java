@@ -1,4 +1,4 @@
-package kr.ac.ajou.groupho.controllers;
+package kr.ac.ajou.controllers;
 
 import java.util.List;
 

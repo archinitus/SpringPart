@@ -1,4 +1,4 @@
-package kr.ac.ajou.groupho.springjpa.data;
+package kr.ac.ajou.springjpa.data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

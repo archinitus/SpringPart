@@ -1,4 +1,4 @@
-package kr.ac.ajou.groupho.springjpa.config;
+package kr.ac.ajou.springjpa.config;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 
 @Configuration
-@EnableJpaRepositories("kr.ac.ajou.groupho.springjpa")
+@EnableJpaRepositories("kr.ac.ajou.springjpa")
 public class DataConfig {
 	
 	@Bean
@@ -30,7 +30,7 @@ public class DataConfig {
 		
 		emf.setDataSource(dataSource());
 		emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		emf.setPackagesToScan(new String[] { "kr.ac.ajou.groupho.springjpa"});
+		emf.setPackagesToScan(new String[] { "kr.ac.ajou.springjpa"});
 		
 		return emf;
 	}

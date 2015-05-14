@@ -1,9 +1,9 @@
-package kr.ac.ajou.groupho.springjpa;
+package kr.ac.ajou.springjpa;
 
 import java.util.List;
 
-import kr.ac.ajou.groupho.springjpa.config.Config;
-import kr.ac.ajou.groupho.springjpa.data.Message;
+import kr.ac.ajou.springjpa.config.Config;
+import kr.ac.ajou.springjpa.data.Message;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,6 +12,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class JPATest {
 	
 	public static void main(String[] args) {
+		
 		
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
 		
@@ -36,5 +37,6 @@ public class JPATest {
 		
 		// Why it doesn't work....
 		// Remote modify
+		
 	}
 }
