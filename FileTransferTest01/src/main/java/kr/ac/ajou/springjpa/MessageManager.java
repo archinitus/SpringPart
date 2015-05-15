@@ -6,7 +6,7 @@ import kr.ac.ajou.springjpa.data.Message;
 
 public interface MessageManager {
 	
-	Message insert(String sender, String receiver, String filePath);
+	Message insert(String sender, String receiver, String filePath, String textMessage);
 	
 	Message findOne(long id);
 	

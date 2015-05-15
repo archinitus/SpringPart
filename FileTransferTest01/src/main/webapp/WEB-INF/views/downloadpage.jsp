@@ -9,6 +9,7 @@
 <body>
 	
 	<h2>Hi ${to}, Here is received File from ${from}</h2>
+	<h3>Message : ${textMessage}</h3>
 	<h4><a href="/ajou/${downPath}">Download</a></h4>
 </body>
 </html>

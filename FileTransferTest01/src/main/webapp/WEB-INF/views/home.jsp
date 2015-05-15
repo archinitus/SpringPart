@@ -10,5 +10,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+<h3> Go to <a href="/ajou/view">view page</a></h3>
 </body>
 </html>

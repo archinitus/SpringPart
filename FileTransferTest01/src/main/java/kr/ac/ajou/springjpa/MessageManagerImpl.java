@@ -15,8 +15,8 @@ public class MessageManagerImpl implements MessageManager {
 	private MessageRepository repo;
 
 	@Override
-	public Message insert(String sender, String receiver, String filePath) {
-		Message msg = repo.save(new Message(sender, receiver, filePath));
+	public Message insert(String sender, String receiver, String filePath, String textMessage) {
+		Message msg = repo.save(new Message(sender, receiver, filePath, textMessage));
 		return msg;
 	}
 

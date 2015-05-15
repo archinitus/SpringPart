@@ -14,6 +14,7 @@
 			<tr><td><label>To:</label></td><td><input name="to" type="text" /> <br></td></tr>
 			<tr><td><label>From:</label></td><td><input name="from" type="text" /> <br></td></tr>
 			<tr><td><label>File:</label></td><td><input name="file" type="file" /> <br></td></tr>
+			<tr><td><label>MSG :</label></td><td><input name="textMessage" type="text" /> <br></td></tr>
 		</table> 
 	    <br>
 	    <input type="submit" value="Upload" />

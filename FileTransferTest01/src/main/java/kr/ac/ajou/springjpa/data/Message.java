@@ -15,20 +15,30 @@ public class Message {
 	private String sender;
 	private String receiver;
 	private String filePath;
+	private String textMessage;
 	
 	public Message() {
 		
 	}
 	
-	public Message(Long id, String sender, String receiver, String filePath) {
-		this(sender, receiver, filePath);
+	public Message(Long id, String sender, String receiver, String filePath, String textMessage) {
+		this(sender, receiver, filePath, textMessage);
 		this.id = id;
 	}
 	
-	public Message(String sender, String receiver, String filePath) {
+	public Message(String sender, String receiver, String filePath, String textMessage) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.filePath = filePath;
+		this.textMessage = textMessage;
+	}
+	
+	public String getTextMessage() {
+		return textMessage;
+	}
+
+	public void setTextMessage(String textMessage) {
+		this.textMessage = textMessage;
 	}
 	
 	public Long getId() {
@@ -58,7 +68,7 @@ public class Message {
 	
 	public String toString() {
 		return "Message [id=" + id +", sender=" + sender + ", receiver=" + receiver
-				+ ", filePath=" + filePath + "]";
+				+ ", filePath=" + filePath + ", MSG=" + textMessage + "]";
 	}
 
 }
