@@ -2,6 +2,7 @@ package kr.ac.ajou.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,44 +44,39 @@ public class FileUploadController {
 
 		MultipartFile file = uploadForm;
 
+		long fileSize = file.getSize();
+		
 		// File upload to local drive of server.
 		if(file != null) {
-			String fileName = file.getOriginalFilename();
-			String path = "c:/spring_test/project/upload/" + fileName;
-					
-			File f = new File(path);
-					
-			file.transferTo(f);
-			System.out.println("file names: " + fileName);
-			System.err.println("textMessage: " + textMessage);
 			
-			manager.insert(sender, receiver, path, textMessage);
-			
-			
-			
-			List<Message> msgs = manager.findAll();
-			for(Message m : msgs) {
-				System.err.println(m.toString());
+			if(fileSize > 0) {
+				String fileName = file.getOriginalFilename();
+				String path = "c:/spring_test/project/upload/" + fileName;
+						
+				File f = new File(path);
+						
+				file.transferTo(f);
+				System.out.println("file names: " + fileName);
+				System.err.println("textMessage: " + textMessage);
+				
+				manager.insert(sender, receiver, path, textMessage);
+				
+				
+				
+				List<Message> msgs = manager.findAll();
+				for(Message m : msgs) {
+					System.err.println(m.toString());
+				}
+	
+				model.addAttribute("state", "with file");
+				return "success";	
+			} else {
+				manager.insert(sender, receiver, null, textMessage);
+				model.addAttribute("state", "without file");
+				return "success";
 			}
-			
-		
-			model.addAttribute("to", receiver);
-			model.addAttribute("from", sender);
-			model.addAttribute("file", fileName);
-			model.addAttribute("textMessage", textMessage);
-			return "success";	
 		} else {
 			return "fail";
-		}
-		
-	}
-	
-	@RequestMapping(value = "/dbtest")
-	public void TestDB() throws Exception {
-		
-		List<Message> msgs = manager.findAll();
-		for(Message m : msgs) {
-			System.err.println(m.toString());
 		}
 		
 	}
@@ -112,24 +108,34 @@ public class FileUploadController {
 	public String save(@RequestParam("to") String receiver, Model model) throws Exception {
 		
 		String path = null;
-		String sender = null;
-		String textMsg = null;
+
+		
+		List<Message> msgList = new ArrayList<Message>();
 		
 		List<Message> foundedMsg = manager.findByReceiver(receiver);
 		for(Message m : foundedMsg) {
 			System.err.println(m.toString());
 			path = m.getFilePath();
-			sender = m.getSender();
-			textMsg = m.getTextMessage();
+			if(path == null) {
+				msgList.add(m);
+			} else {
+				String downloadPath = "/download?path=" + path;
+				m.setFilePath(downloadPath);
+				msgList.add(m);
+			}
+			
 		}
 		
-		String downloadPath = "/download?path=" + path;
+		//String downloadPath = "/download?path=" + path;
 
 		
 		model.addAttribute("to", receiver);
+		model.addAttribute("msgList", msgList);
+		/*
 		model.addAttribute("from", sender);
 		model.addAttribute("textMessage", textMsg);
 		model.addAttribute("downPath", downloadPath);
+		*/
 		
 		return "downloadpage";	
 		

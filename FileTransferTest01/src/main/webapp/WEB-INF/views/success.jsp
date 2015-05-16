@@ -9,9 +9,7 @@
 </head>
 <body>
 	<p> upload done! </p>
-	<p>To: ${to}</p>
-	<p>From: ${from}</p>
-	<p>${file}<p>
+	<p>${state}</p>
 	
 </body>
 </html>
