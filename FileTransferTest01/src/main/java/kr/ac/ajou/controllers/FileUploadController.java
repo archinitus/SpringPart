@@ -1,10 +1,13 @@
 package kr.ac.ajou.controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.ac.ajou.springjpa.MessageManager;
@@ -26,17 +29,54 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pusher.rest.Pusher;
+
 @Controller
 public class FileUploadController {
 	
 	@Autowired
 	private MessageManager manager;
 	
+	
+	Pusher pusher = new Pusher("120283", "7f7588114aed4bb2ff5b", "b003ca3b4ab29def6d48");
+	
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String displayForm() {
 		return "fileupload";
 	}
 	
+	@RequestMapping(value="/ajaxtest")
+	public String ajaxTest() {
+		return "ajaxtest";
+	}
+	
+	
+	@RequestMapping(value="/chat")
+	public String chatting() {
+		return "chat";
+	}
+	
+	
+	@RequestMapping(value="/api/echo")
+	@ResponseBody
+	public String testMessage(@RequestParam("message") String message) {
+		pusher.trigger("test_channel", "echo", Collections.singletonMap("message", message));
+		String result = "{\"status\": 0}";
+		return result;
+	}
+	
+	
+	
+	@RequestMapping(value="/ajax", method=RequestMethod.POST)
+	@ResponseBody
+	public String ajaxResponse(@RequestParam("user") String user, @RequestParam("chat") String chat, Model model) {
+		System.err.println("user: " + user + ", chat: " + chat);
+		String returnStr = "[" + user + "] " + chat ;
+		
+		return returnStr;
+	}
+	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@RequestParam("to") String receiver, @RequestParam("from") String sender, @RequestParam("textMessage") String textMessage,
 			@RequestParam("file") MultipartFile uploadForm, Model model) throws Exception {
