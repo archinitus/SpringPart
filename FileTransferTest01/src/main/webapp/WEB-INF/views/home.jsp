@@ -15,6 +15,7 @@
 		
 		<ul>
 			<li><h4><a href="/ajou/messageform">Sending a message (with file)</a></h4></li>
+			<li><h4><a href="/ajou/messageviewer">Message viewer</a></h4></li>
 			<li><h4><a href="/ajou/chatlogin">Chatting room</a></h4></li>
 		</ul>
 		

@@ -47,6 +47,12 @@ public class MainController {
 		return "messageform";
 	}
 	
+	@RequestMapping(value = "/messageviewer") 
+	public String messageViewer() {
+		return "messageviewer";
+	}
+	
+	
 	@RequestMapping(value="/chat")
 	public String ajaxTest(@RequestParam("name") String name, @RequestParam("email") String email, Model model) {
 		
