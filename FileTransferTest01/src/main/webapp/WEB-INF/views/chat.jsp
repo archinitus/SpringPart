@@ -20,10 +20,14 @@
 			<input class="inputMessage" placeholder="Type here . . ."/>
 		</li>
 	</ul>
-
+	
 <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="<%=cp%>/resources/js/pusher_key.js" type="text/javascript"></script>
+<script>
+	var userName = "${name}";
+	var userEmail = "${email}";
+</script>
 <script src="<%=cp%>/resources/js/chat.js" type="text/javascript"></script>
 
 </body>

@@ -1,59 +1,44 @@
-/**
- * 
- */
 
 $(function() {
-    var pusher = new Pusher(PUSHER_KEY)
+    var pusher = new Pusher(PUSHER_KEY),
         testChannel =pusher.subscribe('test_channel'),
+        broadcast = pusher.subscribe('br');
         $window = $(window),
         $messages = $('.messages'),
         $inputMessage = $('.inputMessage'),
         chatPage = $('.chat.page');
-
-
-    var initial_delay = 1500;
-    setTimeout(function () {
-        addChatMessage({'username':'lee', 'message':'hi?'});
-    },initial_delay + 500)
-    setTimeout(function () {
-        addChatMessage({'username':'hong', 'message':'hello?'});
-    },initial_delay + 1000)
-    setTimeout(function () {
-        addChatMessage({'username':'hone', 'message':'whats up?'});
-    },initial_delay + 1500)
-    setTimeout(function () {
-        addChatMessage({'username':'le', 'message':'????'});
-    },initial_delay + 2000)
-
-    testChannel.bind('echo', function(data) {
-        data['username'] = "iamuser";
-        addChatMessage(data);
+        
+    var username = userName;
+    	useremail = userEmail;
+    
+    broadcast.bind('new_message', function(data) {
+    	addChatMessage(data);
     });
-
-    setTimeout(function () {
-        $.post('/ajou/api/echo', {"message":"Hello World!"});
-    },initial_delay +  4000)
-    setTimeout(function () {
-        $.post('/ajou/api/echo', {"message":"dfasdf"});
-    },initial_delay +  5000)
-    setTimeout(function () {
-        $.post('/ajou/api/echo', {"message":"asdfasdfasdf"});
-    },initial_delay +  6000)
-
+    
+    broadcast.bind('user_entered', function(data) {
+    	addNotice(data);
+    });
+    
+    function addNotice(data) {
+    	var $messageDiv = $('<span class="messageBody"></span>');
+    	$messageDiv.text("-------- " + data.username + "(" + data.useremail + ") " + " has just entered this chat --------");
+    	
+    	addMessageElement($messageDiv);
+    }
+    
+    
     function addChatMessage(data) {
         var $usernameDiv = $('<span class="username"></span>');
         $usernameDiv.css("color", getUsernameColor(data.username));
         $usernameDiv.text(data.username);
-
+        
         var $messageBodyDiv = $('<span class="messageBody"></span>');
         $messageBodyDiv.text(data.message);
-
-        var typingClass = data.typing ? 'typing' : '';
-        var $messageDiv = $('<li class="message ' + typingClass + '"></li>');
+        
+        var $messageDiv = $('<li class="message"></li>');
         $messageDiv.append($usernameDiv)
             .append($messageBodyDiv)
             .data('username', data.username);
-
         addMessageElement($messageDiv);
     }
 
@@ -80,7 +65,7 @@ $(function() {
     	
     	if(message) {
     		$inputMessage.val('');
-    		$.post('/ajou/api/echo', {"message":message});
+    		$.post('/ajou/chat/new_message', {"message":message, "username":username, "useremail":useremail});
     	}
     }
     

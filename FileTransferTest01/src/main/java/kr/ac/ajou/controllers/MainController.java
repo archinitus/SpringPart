@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.pusher.rest.Pusher;
 
 @Controller
-public class FileUploadController {
+public class MainController {
 	
 	@Autowired
 	private MessageManager manager;
@@ -40,20 +42,50 @@ public class FileUploadController {
 	
 	Pusher pusher = new Pusher("120283", "7f7588114aed4bb2ff5b", "b003ca3b4ab29def6d48");
 	
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	@RequestMapping(value = "/messageform", method = RequestMethod.GET)
 	public String displayForm() {
-		return "fileupload";
+		return "messageform";
 	}
-	
-	@RequestMapping(value="/ajaxtest")
-	public String ajaxTest() {
-		return "ajaxtest";
-	}
-	
 	
 	@RequestMapping(value="/chat")
-	public String chatting() {
+	public String ajaxTest(@RequestParam("name") String name, @RequestParam("email") String email, Model model) {
+		
+		if(name.length() == 0) {
+			name = null;
+			email = null;
+		}
+		model.addAttribute("name", name);
+		model.addAttribute("email", email);
+		
+		Map<String, String> msgData = new HashMap<String, String>();
+		msgData.put("username", name);
+		msgData.put("useremail", email);
+		
+		pusher.trigger("br", "user_entered", msgData);
+		
 		return "chat";
+	}
+	
+	
+	@RequestMapping(value="/chatlogin")
+	public String chatting() {
+		return "chatlogin";
+	}
+	
+	
+	@RequestMapping(value="/chat/new_message")
+	@ResponseBody
+	public String newMessage(@RequestParam("message") String message, @RequestParam("username") String name, @RequestParam("useremail") String email) {
+			
+		Map<String, String> msgData = new HashMap<String, String>();
+		msgData.put("message", message);
+		msgData.put("username", name);
+		msgData.put("useremail", email);
+		
+		pusher.trigger("br", "new_message", msgData);
+		
+		String result = "{\"status\": 0}";
+		return result;
 	}
 	
 	
@@ -63,17 +95,6 @@ public class FileUploadController {
 		pusher.trigger("test_channel", "echo", Collections.singletonMap("message", message));
 		String result = "{\"status\": 0}";
 		return result;
-	}
-	
-	
-	
-	@RequestMapping(value="/ajax", method=RequestMethod.POST)
-	@ResponseBody
-	public String ajaxResponse(@RequestParam("user") String user, @RequestParam("chat") String chat, Model model) {
-		System.err.println("user: " + user + ", chat: " + chat);
-		String returnStr = "[" + user + "] " + chat ;
-		
-		return returnStr;
 	}
 	
 
@@ -144,7 +165,7 @@ public class FileUploadController {
 		return new FileSystemResource(file);
 	}
 	
-	@RequestMapping(value = "/downloadpage", method = RequestMethod.GET)
+	@RequestMapping(value = "/messagepage")
 	public String save(@RequestParam("to") String receiver, Model model) throws Exception {
 		
 		String path = null;
@@ -177,7 +198,7 @@ public class FileUploadController {
 		model.addAttribute("downPath", downloadPath);
 		*/
 		
-		return "downloadpage";	
+		return "messagepage";	
 		
 		
 	}

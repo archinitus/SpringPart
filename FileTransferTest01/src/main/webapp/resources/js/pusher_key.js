@@ -1,1 +1,1 @@
-var PUSHER_KEY = 'PUSHER KEY';
+var PUSHER_KEY = '7f7588114aed4bb2ff5b';
